@@ -1,0 +1,72 @@
+
+{% extends 'record/base.html' %}
+
+{% block content %}
+<div class="mini_background">
+    <div class="container">
+
+            <br><br><br><br><br><br><br>
+            <table class="table" style="color:white;">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Schedule</th>
+                        <th>Start</th>
+                        <th>End</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for schedule in events %}
+                    <tr>
+                        <td>{{ schedule.day }}</td>
+                        <td>{{ schedule.notes }}</td>
+                        <td>{{ schedule.start_time }}</td>
+                        <td>{{ schedule.end_time }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <nav>
+                {% comment %} 페이지네이션 {% endcomment %}
+                <ul class="pagination">
+                    {% if events.has_previous %}
+                        <li>
+                            <a href="?page={{ events.previous_page_number }}">
+                                <span><<</span> 
+                            </a> 
+                        </li> 
+                    {% else %} 
+                        <li class="disabled">
+                            <a href="#">
+                                <span><<</span>
+                            </a> 
+                        </li> 
+                    {% endif %} 
+                    {% for page in paginator.page_range %} 
+                    <li {% if events.number == page %} class="active" {% endif %}>
+                            <a href="?page={{ page }}">
+                                <span>{{ page }}</span>
+                            </a>
+                    </li>
+                    {% endfor %}
+
+                    {% if events.has_next %}
+                    <li>
+                        <a href="?page={{ events.next_page_number }}">
+                            <span>>></span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="disabled">
+                        <a href="#">
+                            <span>>></span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+    </div>
+</div>
+
+{% endblock %}
